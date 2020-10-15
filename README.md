@@ -1,19 +1,21 @@
-![App Brewery Banner](https://github.com/londonappbrewery/Images/blob/master/AppBreweryBanner.png)
+![Todo List](https://github.com/manoelfilho/Todo-Swift/blob/master/Todoey/todos.png)
 
 
 # Todoey ✓
 
-## Our Goal
+## Aplicativo
 
-The objective of this tutorial is to understand how to save data in iOS. We'll look at various choices and learn to use UserDefaults, Core Data and Realm.
+Exemplo de app TODO com uso do Core Data com Swift5. O app permite o cadastro de itens categorizados. 
 
-
-## What you will create
-
-A todolist app to keep track of all your tasks.
+Conteúdo criado com auxílio do curso App Brewery https://www.appbrewery.co
 
 
->This is a companion project to The App Brewery's Complete iOS Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
+## Instalação 
 
-![End Banner](https://github.com/londonappbrewery/Images/blob/master/readme-end-banner.png)
+Baixe a versão no seu diretório:
+
+git clone git@github.com:manoelfilho/Todo-Swift.git
+
+Acesse a pasta Todo-Swift e execute o arqui Todoey.xcodeproj. Selecione um simulador com IOS14 ou posterior e faça o build da aplicação com command R
+
 
