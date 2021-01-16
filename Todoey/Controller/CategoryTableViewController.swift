@@ -24,10 +24,11 @@ class CategoryTableViewController: UITableViewController {
     }
 
     //MARK: - Modal para novo item
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField  = UITextField()
-        let alert = UIAlertController(title: "Adicione uma nova categoria", message: "Subtítulo", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add category", style: .default) { (action) in
+        let alert = UIAlertController(title: "Adicione uma nova categoria", message: "Cada categoria pode ter nenhuma ou diversas tarefas", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Adicionar", style: .default) { (action) in
             DispatchQueue.main.async {
                 
                 let category = Category(context: self.context)
@@ -71,6 +72,33 @@ class CategoryTableViewController: UITableViewController {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     
+    //swipe lateral direito trailingSwipeActionsConfigurationForRowAt
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        //acao 1
+        //podemos adicionar acoes para o swipe lateral aqui
+        let trash = UIContextualAction(style: .destructive, title: "Remover") { (action, vieew, completionHandler) in
+            
+            //remove o elemento do contexto
+            //entao remove do array de dados
+            self.context.delete(self.categoryArray[indexPath.row])
+            self.categoryArray.remove(at: indexPath.row)
+            
+            //recarrega tela
+            self.loadItems()
+            
+        }
+        
+        trash.backgroundColor = .systemRed
+
+        let configuration = UISwipeActionsConfiguration(actions: [trash])
+        
+        configuration.performsFirstActionWithFullSwipe = false
+
+        return configuration
+        
+    }
+    
     //metodo executado antes do performSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationViewController = segue.destination as! TodoListViewController
@@ -78,7 +106,6 @@ class CategoryTableViewController: UITableViewController {
             destinationViewController.selectedCategory = categoryArray[indexPath.row]
         }
     }
-    
     
     //MARK: -  Data
     

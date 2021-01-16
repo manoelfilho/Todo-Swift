@@ -19,34 +19,15 @@ class TodoListViewController: UITableViewController {
         }
     }
     
-    // arquivo com os dados salvos no telefone
-    
-    // let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    //db do telefone
-    //let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         navigationItem.title = selectedCategory?.name
-        
-        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-                
+                        
         self.loadItems()
-    
-        /*
-             metodo para retornar dados basicos do telefone salvos no array
-             a localizacao desses arquivos no macos pode ser verificado no método
-             dispoível em AppDelegate.swift desse projeto
-             
-             if let items = defaults.array(forKey: "TodoListArray") as? [Item]{
-                 itemArray = items
-             }
-         */
     
     }
 
@@ -90,7 +71,6 @@ class TodoListViewController: UITableViewController {
     //método executado ao selecionasr uma linha do table view
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //YES
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         // Para remover um item do core data, removemos o item do core data e depois do array da tela
@@ -125,6 +105,33 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
         
         self.saveData()
+        
+    }
+    
+    //swipe lateral direito trailingSwipeActionsConfigurationForRowAt
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        //acao 1
+        //podemos adicionar acoes para o swipe lateral aqui
+        let trash = UIContextualAction(style: .destructive, title: "Remover") { (action, vieew, completionHandler) in
+            
+            //remove o elemento do contexto
+            //entao remove do array de dados
+            self.context.delete(self.itemArray[indexPath.row])
+            self.itemArray.remove(at: indexPath.row)
+            
+            //recarrega tela
+            self.loadItems()
+            
+        }
+        
+        trash.backgroundColor = .systemRed
+
+        let configuration = UISwipeActionsConfiguration(actions: [trash])
+        
+        configuration.performsFirstActionWithFullSwipe = false
+
+        return configuration
         
     }
     
@@ -229,7 +236,11 @@ extension TodoListViewController: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
+            
+            
             // tirar o foco do componente
+            // aqui o comando de tirar o foco é executado em background
+            
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
