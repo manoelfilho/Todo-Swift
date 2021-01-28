@@ -1,11 +1,11 @@
 ![Todo List](https://github.com/manoelfilho/Todo-Swift/blob/master/Todoey/todos.png)
 
 
-# Todoey ✓
+# Lista de tarefas com banco de dados Core Data
 
 ## Aplicativo
 
-Exemplo de app TODO com uso do Core Data com Swift5. O app permite o cadastro de itens categorizados. 
+Exemplo de app lista de tarefas com uso do Core Data com Swift5. O app permite o cadastro de itens categorizados. 
 
 Conteúdo criado com auxílio do curso App Brewery https://www.appbrewery.co
 
